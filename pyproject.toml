@@ -1,0 +1,93 @@
+[tool.poetry]
+name = "pytest-iterassert"
+version = "0.0.1"
+description = "Nicer list and iterable assertion messages for pytest"
+authors = ["Toby Fleming <tobywf@users.noreply.github.com>"]
+license = "MPL-2.0"
+readme = "README.md"
+homepage = "https://github.com/tobywf/pytest-iterassert"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Framework :: Pytest",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Testing :: Unit",
+]
+packages = [
+    { include = "iterassert", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+
+[tool.poetry.dev-dependencies]
+ipython = "^7.14.0"
+pytest = "^5.4.1"
+coverage = {version = "^5.1", extras = ["toml"]}
+pytest-cov = "^2.8.1"
+pytest-random-order = "^1.0.4"
+black = "^19.10b0"
+pylint = {version = "^2.5.0", extras = ["toml"]}
+mypy = "^0.770"
+isort = "^4.3.21"
+
+[tool.isort]
+# see https://black.readthedocs.io/en/stable/the_black_code_style.html
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+
+indent = '    '
+combine_as_imports = true
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+fail_under = 100
+
+[tool.pylint.MASTER]
+ignore = "CVS"
+persistent = "yes"
+jobs = "1"
+
+[tool.pylint."MESSAGES CONTROL"]
+# bad-continuation,  # clashes with black
+# line-too-long,  # clashes with black
+# ungrouped-imports, # clashes with isort
+# wrong-import-position, # clashes with isort
+# wrong-import-order, # clashes with isort
+# locally-disabled, # this would be useful if pylint produced no false positives
+# suppressed-message, # this would be useful if pylint produced no false positives
+# too-few-public-methods, # this one is dumb when e.g. inheriting
+
+enable = "all"
+disable = """
+bad-continuation,
+line-too-long,
+ungrouped-imports,
+wrong-import-position,
+wrong-import-order,
+locally-disabled,
+suppressed-message,
+too-few-public-methods,
+missing-docstring,
+"""
+
+[tool.pylint.BASIC]
+good-names = "_"
+
+[tool.pylint.FORMAT]
+indent-string = "    "
+
+[build-system]
+requires = ["poetry>=1.0.0"]
+build-backend = "poetry.masonry.api"

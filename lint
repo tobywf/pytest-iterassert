@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -ex
+
+src=("src/iterassert/")
+tst=("tests.py")
+
+if [[ -n "$1" ]]; then
+  ISORT_CHECK="--check-only"
+  BLACK_CHECK="--check"
+else
+  ISORT_CHECK=""
+  BLACK_CHECK=""
+fi
+
+isort --recursive $ISORT_CHECK "${src[@]}" "${tst[@]}"
+black $BLACK_CHECK "${src[@]}" "${tst[@]}"
+mypy --strict "${src[@]}"
+mypy --strict --allow-untyped-decorator "${tst[@]}"
+
+pytest \
+  --cov="iterassert" \
+  --cov-report="term" \
+  --cov-report="html" \
+  --random-order-bucket="parent" \
+  -p "pytester" \
+  "${tst[@]}"
+
+pylint "${src[@]}" "${tst[@]}"
