@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-iterassert"
-version = "0.0.2"
+version = "0.0.3"
 description = "Nicer list and iterable assertion messages for pytest"
 authors = ["Toby Fleming <tobywf@users.noreply.github.com>"]
 license = "MPL-2.0"

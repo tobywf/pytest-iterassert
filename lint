@@ -7,9 +7,11 @@ tst=("tests.py")
 if [[ -n "$1" ]]; then
   ISORT_CHECK="--check-only"
   BLACK_CHECK="--check"
+  cov_report="xml"
 else
   ISORT_CHECK=""
   BLACK_CHECK=""
+  cov_report="html"
 fi
 
 isort --recursive $ISORT_CHECK "${src[@]}" "${tst[@]}"
@@ -20,7 +22,7 @@ mypy --strict --allow-untyped-decorator "${tst[@]}"
 pytest \
   --cov="iterassert" \
   --cov-report="term" \
-  --cov-report="html" \
+  --cov-report="$cov_report" \
   --random-order-bucket="parent" \
   -p "pytester" \
   "${tst[@]}"
